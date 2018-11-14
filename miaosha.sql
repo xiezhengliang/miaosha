@@ -16,6 +16,26 @@ CREATE DATABASE /*!32312 IF NOT EXISTS*/`miaosha` /*!40100 DEFAULT CHARACTER SET
 
 USE `miaosha`;
 
+/*Table structure for table `miaosha_user` */
+
+DROP TABLE IF EXISTS `miaosha_user`;
+
+CREATE TABLE `miaosha_user` (
+  `id` bigint(20) NOT NULL,
+  `nickname` varchar(255) NOT NULL,
+  `password` varchar(32) DEFAULT NULL,
+  `salt` varchar(10) DEFAULT NULL,
+  `head` varchar(128) DEFAULT NULL,
+  `register_date` datetime DEFAULT NULL,
+  `last_login_date` datetime DEFAULT NULL,
+  `login_count` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+/*Data for the table `miaosha_user` */
+
+insert  into `miaosha_user`(`id`,`nickname`,`password`,`salt`,`head`,`register_date`,`last_login_date`,`login_count`) values (18819470271,'xiezhengliang','b7797cce01b4b131b433b6acf4add449','1a2b3c4d',NULL,'2018-11-14 11:32:21','2018-11-14 11:32:24',1);
+
 /*Table structure for table `user` */
 
 DROP TABLE IF EXISTS `user`;
