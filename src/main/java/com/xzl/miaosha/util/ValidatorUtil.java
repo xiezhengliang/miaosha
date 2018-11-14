@@ -19,4 +19,7 @@ public class ValidatorUtil {
 		Matcher m = mobile_pattern.matcher(src);
 		return m.matches();
 	}
+	
+	public static void main(String[] args) {
+	}
 }

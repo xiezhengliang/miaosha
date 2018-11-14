@@ -1,16 +1,22 @@
 package com.xzl.miaosha.controller;
 
+import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 import javax.validation.Validator;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.druid.util.StringUtils;
 import com.xzl.miaosha.result.CodeMsg;
 import com.xzl.miaosha.result.Result;
+import com.xzl.miaosha.service.MiaoshaUserService;
 import com.xzl.miaosha.util.ValidatorUtil;
 import com.xzl.miaosha.vo.LoginVo;
 
@@ -20,10 +26,12 @@ import com.xzl.miaosha.vo.LoginVo;
 */
 @RequestMapping("/login")
 @Controller
-@EnableAutoConfiguration
 public class Logincontroller {
 
 	private Logger log = LoggerFactory.getLogger(Logincontroller.class);
+	
+	@Autowired
+	MiaoshaUserService miaoshaUserService;
 	
 	@RequestMapping("/to_login")
 	public String toLogin(){
@@ -31,21 +39,21 @@ public class Logincontroller {
 	}
 	
 	@RequestMapping("/do_login")
-	public Result<Boolean> doLogin(LoginVo loginVo){
+	@ResponseBody
+	public Result<Boolean> doLogin(@Valid LoginVo loginVo){
 		log.info(loginVo.toString());
-		String passInput = loginVo.getPassword();
-		String mobile = loginVo.getMobile();
-		if(StringUtils.isEmpty(passInput)){
-			return Result.error(CodeMsg.PASSWORD_EMPTY);
-		}if(StringUtils.isEmpty(mobile)){
-			return Result.error(CodeMsg.MOBILE_EMPTY);
-		}
-		if(ValidatorUtil.isMobile(mobile)){
-			return Result.error(CodeMsg.MOBILE_EMPTY);
-		}
-		if(!ValidatorUtil.isMobile(mobile)){
-			return Result.error(CodeMsg.MOBILE_ERROR);
-		}
-		return null;
+//		String passInput = loginVo.getPassword();
+//		String mobile = loginVo.getMobile();
+//		if(StringUtils.isEmpty(passInput)){
+//			return Result.error(CodeMsg.PASSWORD_EMPTY);
+//		}if(StringUtils.isEmpty(mobile)){
+//			return Result.error(CodeMsg.MOBILE_EMPTY);
+//		}if(!ValidatorUtil.isMobile(mobile)){
+//			return Result.error(CodeMsg.MOBILE_ERROR);
+//		}
+		//登录
+		miaoshaUserService.login( loginVo);
+    	return Result.success(true);
+		
 	}
 }
